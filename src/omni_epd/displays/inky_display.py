@@ -118,5 +118,10 @@ class InkyDisplay(VirtualEPD):
 
 # left here for back-compat
 class InkyImpressionDisplay(InkyDisplay):
+    @staticmethod
+    def get_supported_devices():
+        return []
+
+    devices = [] # allow base to handle them all
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
