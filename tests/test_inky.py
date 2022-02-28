@@ -8,16 +8,17 @@ from PIL import Image
 
 class TestInkyDisplay(unittest.TestCase):
 
-    # @pytest.mark.xfail
+    @pytest.mark.xfail
     def test_auto_inky(self):
         """
         test auto loading real inky display
         """
-        epd = displayfactory.load_display_driver('inky.auto')
+        epd = displayfactory.load_display_driver('inky.impression')
         image = Image.open(os.path.dirname(os.path.realpath(__file__)) + '/../examples/PIA03519_small.jpg')
         image = image.resize((epd.width, epd.height))
         epd.display(image)
 
+    @pytest.mark.xfail
     def test_epd2in7b_V2(self):
         """
         test auto loading real waveshare 
