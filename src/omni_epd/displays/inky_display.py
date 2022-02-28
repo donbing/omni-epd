@@ -100,6 +100,7 @@ class InkyDisplay(VirtualEPD):
         if(self.mode == "color"):
             # dont filter the image if it's an impression, only set saturation
             saturation = self._getfloat_device_option('saturation', .5)  # .5 is default from Inky lib
+            image = self._filterImage(image)
             self._device.set_image(image.convert("RGB"), saturation=saturation) 
         else:
             image = self._filterImage(image)
@@ -115,6 +116,7 @@ class InkyDisplay(VirtualEPD):
 
         self._device.show()
 
+# left here for back-compat
 class InkyImpressionDisplay(InkyDisplay):
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
