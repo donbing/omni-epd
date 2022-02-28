@@ -55,13 +55,13 @@ class InkyDisplay(VirtualEPD):
         elif(dType == 'impression'):
             deviceObj = self.load_display_driver(self.pkg_name, 'inky_uc8159')
             self._device = deviceObj.Inky(dColor)
-            self.mode = 'color' # default to color for impression
+            self.mode = dColor = 'color' # default to color for impression
         elif(dType == 'auto'):
             deviceObj = self.load_display_driver(self.pkg_name, 'auto')
             self._device = deviceObj.auto()
             dColor = 'color' if self._device.colour == 'multi' else self._device.colour
 
-        self.clear_color = self._device.WHITE
+        self.clear_color = deviceObj.WHITE
 
         # set mode to black + any other color supported
         if(self.mode != "black"):
@@ -77,7 +77,7 @@ class InkyDisplay(VirtualEPD):
         elif(self.mode == "color" and dColor == "color"):
             self.palette_filter = deviceObj.DESATURATED_PALETTE
             self.max_colors = 8
-            self.clear_color = self._device.CLEAR
+            self.clear_color = deviceObj.CLEAN
 
         # set the width and height
         self.width = self._device.width
@@ -100,7 +100,6 @@ class InkyDisplay(VirtualEPD):
         if(self.mode == "color"):
             # dont filter the image if it's an impression, only set saturation
             saturation = self._getfloat_device_option('saturation', .5)  # .5 is default from Inky lib
-            image = self._filterImage(image)
             self._device.set_image(image.convert("RGB"), saturation=saturation) 
         else:
             image = self._filterImage(image)
